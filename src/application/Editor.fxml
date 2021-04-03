@@ -87,6 +87,7 @@
                            <children>
                               <Label text="Data" />
                               <ListView prefHeight="158.0" prefWidth="274.0" />
+                              <Button mnemonicParsing="false" prefHeight="11.0" prefWidth="60.0" text="Apply" />
                            </children>
                         </VBox>
                         <ScrollBar orientation="VERTICAL" prefHeight="100.0" prefWidth="20.0" />
