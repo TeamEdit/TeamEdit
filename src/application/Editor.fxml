@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorController">
    <children>
-      <MenuBar prefHeight="32.0" prefWidth="600.0" AnchorPane.bottomAnchor="568.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar prefHeight="32.0" prefWidth="600.0" AnchorPane.bottomAnchor="568.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="theMenu">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -27,8 +27,8 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Import">
                <items>
-                  <MenuItem fx:id="importSong" mnemonicParsing="false" text="Song" />
-                  <MenuItem fx:id="importAlbum" mnemonicParsing="false" text="Album" />
+                  <MenuItem fx:id="importSong" mnemonicParsing="false" text="Song" onAction= "#showLoad"/>
+                  <MenuItem fx:id="importAlbum" mnemonicParsing="false" text="Album" onAction= "#showLoad"/>
                </items>
             </Menu>
         </menus>
