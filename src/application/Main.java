@@ -6,9 +6,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
+
+import java.nio.file.Paths;
+
+import application.model.FS;
 // My name is ...
 
 public class Main extends Application {
+	public static FS filesystem;
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -23,6 +30,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		filesystem = new FS();
+		filesystem.setWorkDir(Paths.get("")); // Current working directory
 		launch(args);
 	}
 }

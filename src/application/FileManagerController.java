@@ -47,26 +47,27 @@ public class FileManagerController {
 	}
 	
 	@FXML
-	private void loadNewDir(ActionEvent event) {
+	private void changeWorkDir(ActionEvent event) {
+		// Changes working directory then calls loadWorkDir 
 		String newPathStr = newDir.getText();
-		Path newPath 	  = Paths.get(newPathStr);
-		DirectoryStream<Path> ds = null;
-		try {
-			ds = Files.newDirectoryStream(newPath);
-		} catch (IOException e) {
-			System.out.println("Can't read path " + newPathStr);
-		} 
-		
-		if(ds != null) {
-			ObservableList<Label> ol = FXCollections.observableArrayList();
-			for(Path p: ds) {
-				Label l = new Label();
-				l.setText(p.getFileName().toString());
-				ol.add(l);
-				System.out.println(p.toString());
-			}
-			dirResults.setItems(ol);
+		Main.model.setWorkDir(Paths.get(newPathStr));
+		this.loadWorkDir();
+	}
+	
+	@FXML
+	private void loadWorkDir() {
+		ObservableList<Label> ol = FXCollections.observableArrayList();
+		for(Path p: Main.model.lsWorkDir()) {
+			Label l = new Label();
+			l.setText(p.getFileName().toString());
+			ol.add(l);
 		}
+		dirResults.setItems(ol);
+	}
+	
+	@FXML
+	private void initialize() {
+		this.loadWorkDir();
 	}
 	
 }
