@@ -50,14 +50,14 @@ public class FileManagerController {
 	private void changeWorkDir(ActionEvent event) {
 		// Changes working directory then calls loadWorkDir 
 		String newPathStr = newDir.getText();
-		Main.model.setWorkDir(Paths.get(newPathStr));
+		Main.filesystem.setWorkDir(Paths.get(newPathStr));
 		this.loadWorkDir();
 	}
 	
 	@FXML
 	private void loadWorkDir() {
 		ObservableList<Label> ol = FXCollections.observableArrayList();
-		for(Path p: Main.model.lsWorkDir()) {
+		for(Path p: Main.filesystem.lsWorkDir()) {
 			Label l = new Label();
 			l.setText(p.getFileName().toString());
 			ol.add(l);
