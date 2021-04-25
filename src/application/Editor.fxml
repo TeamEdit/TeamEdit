@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorController">
    <children>
-      <MenuBar prefHeight="32.0" prefWidth="600.0" AnchorPane.bottomAnchor="568.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="theMenu">
+      <MenuBar fx:id="theMenu" prefHeight="32.0" prefWidth="600.0" AnchorPane.bottomAnchor="568.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -27,8 +27,8 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Import">
                <items>
-                  <MenuItem fx:id="importSong" mnemonicParsing="false" text="Song" onAction= "#showLoad"/>
-                  <MenuItem fx:id="importAlbum" mnemonicParsing="false" text="Album" onAction= "#showLoad"/>
+                  <MenuItem fx:id="importSong" mnemonicParsing="false" onAction="#showLoad" text="Song" />
+                  <MenuItem fx:id="importAlbum" mnemonicParsing="false" onAction="#showLoad" text="Album" />
                </items>
             </Menu>
         </menus>
@@ -37,40 +37,7 @@
         <items>
           <AnchorPane prefHeight="347.0" prefWidth="295.0">
                <children>
-                  <HBox prefHeight="347.0" prefWidth="295.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="#" />
-                              <ListView layoutX="10.0" layoutY="110.0" prefHeight="525.0" prefWidth="99.0" style="-fx-background-color: lightgray;" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Artist" />
-                              <ListView prefHeight="525.0" prefWidth="295.0" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Album" />
-                              <ListView prefHeight="525.0" prefWidth="295.0" style="-fx-background-color: lightgray;" />
-                           </children>
-                        </VBox>
-                        <VBox layoutX="206.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Title" />
-                              <ListView prefHeight="525.0" prefWidth="295.0" />
-                           </children>
-                        </VBox>
-                        <VBox layoutX="232.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Genre" />
-                              <ListView prefHeight="525.0" prefWidth="295.0" style="-fx-background-color: lightgray;" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+                  <TableView fx:id="songView" layoutX="106.0" layoutY="101.0" prefHeight="566.0" prefWidth="496.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="215.0">
