@@ -22,7 +22,7 @@ import application.model.*;
 public class EditorController {
 	
 	@FXML 
-	private TableView<Song> songTableView;
+	public TableView<Song> songTableView;
 	
     @FXML
     private MenuItem importSong;
@@ -56,26 +56,29 @@ public class EditorController {
     	This is just to get my code 'working' for now. */ 
     	
     	// Setup columns for songView (artist, song, etc)
-    	TableColumn<Song, String> artistColumn =new TableColumn<>("Artist");
-    	artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
+
+
     	
-    	TableColumn<Song, String> titleColumn  = new TableColumn<>("Title");
-    	titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+    	TableColumn<Song, String> artistColumn =new TableColumn<Song,String>("Artist");
+    	artistColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("artist"));
     	
-    	TableColumn<Song, String> filePathColumn  = new TableColumn<>("Filepath");
-    	filePathColumn.setCellValueFactory(new PropertyValueFactory<>("filepathStr"));
+    	TableColumn<Song, String> titleColumn  = new TableColumn<Song,String>("Title");
+    	titleColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("title"));
     	
-    	songTableView.getColumns().addAll(artistColumn, titleColumn, filePathColumn);
+    	this.songTableView.getColumns().setAll(artistColumn, titleColumn);
     	
     	Path selected = Main.filesystem.getSelectedDir();
     	if(selected != null) {
     		System.out.println("About to load song: " + selected.toString());
-    		// We have placeholder content until we can read tags....
-    		// i'm just obsessed with this song so I'm using as test data
-    		Song song1 = new Song("Lady Gaga", "Sine from Above", "Chromatica", 1, selected);
-    		ObservableList<Song> songs = FXCollections.observableArrayList(song1);	
-    		songTableView.setItems(songs);
-    		System.out.println("added " + song1.getFilepathStr());
+    		ObservableList<Song> songs = FXCollections.observableArrayList();	
+
+    		Song song1 = new Song(selected, songs);
+    		songs.add(song1);
+    		this.songTableView.setItems(songs);
+
+    		
+        	System.out.println("Artist: " + song1.getArtist());
+        	System.out.println("Title : " + song1.getTitle());
     	}
     		
     	
