@@ -1,47 +1,22 @@
 package application.model;
 
-import java.io.File;
-import java.nio.file.Path;
-
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.WritableObjectValue;
-import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-import javafx.scene.media.Media;
 //sets up the song class, string properties
 public final class Song extends SimpleObjectProperty<String>{
 	private StringProperty artist;
 	private StringProperty title;
 	private StringProperty album;
-	private StringProperty year;
+	private SimpleIntegerProperty year;
 
-
-
-	private Media media; // The actual javafx media
-
-	public Song(Path filepath, ObservableList<Song> songs) {
-		//Set the file path for media object 
-		File f = filepath.toFile();
-		System.out.println(f.toString());
-		//create the media object    	
-		this.media = new Media(f.toURI().toString());
-		
-		//listens for values and adds to class strings  	
-		this.media.getMetadata().addListener(new MapChangeListener<String, Object>() {
-			@Override
-			public void onChanged(Change<? extends String, ? extends Object> ch) {
-				if (ch.wasAdded()) {
-					if(handleMetadata(ch.getKey(), ch.getValueAdded())) {
-						System.out.println("Loaded key: " + ch.getKey() + ": " + ch.getValueAdded());
-					}
-				}
-			}
-
-		});
-
+	public Song(String artist, String title, String album, int year) {
+			this.setArtist(artist);
+			this.setTitle(title);
+			this.setAlbum(album);
+			this.setYear(year);
 	}
 
 	// Artist getters / setters
@@ -75,17 +50,17 @@ public final class Song extends SimpleObjectProperty<String>{
 	}
 
 	// Year getters / setters	
-	public String getYear() {
+	public int getYear() {
 		return getYearProperty().get();
 	}
 
-	public StringProperty getYearProperty() {
+	public IntegerProperty getYearProperty() {
 		if( this.year == null ) 
-			this.year = new SimpleStringProperty(this, "year");
+			this.year = new SimpleIntegerProperty(this, "year");
 		return this.year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		getYearProperty().set(year);
 	}
 
@@ -102,25 +77,6 @@ public final class Song extends SimpleObjectProperty<String>{
 
 	public void setTitle(String title) {
 		getTitleProperty().set(title);
-	}
-
-	//handles adding metadata to appropriate sting key
-	private boolean handleMetadata(String key, Object value) {
-		boolean loadedValidKey = false;
-		if (key.equals("album")) {
-			this.setAlbum(value.toString());
-			loadedValidKey = true;
-		} else if (key.equals("artist")) {
-			this.setArtist(value.toString());
-			loadedValidKey = true;
-		} else if (key.equals("title")) {
-			this.setTitle(value.toString());
-			loadedValidKey = true;
-		} else if (key.equals("year")) {
-			this.setYear(value.toString());
-			loadedValidKey = true;
-		}
-		return loadedValidKey;
 	}
 	
 }
