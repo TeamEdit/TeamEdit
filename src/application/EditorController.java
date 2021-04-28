@@ -1,10 +1,13 @@
 package application;
 import java.nio.file.Path;
 
-import com.sun.media.jfxmedia.MediaPlayer;
+import javafx.scene.media.MediaPlayer;
 
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.collections.MapChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,16 +76,6 @@ public class EditorController {
 	// Is called when Editor.fxml loads the EditorController.java
 	@FXML
 	void initialize() {
-		Song song1 = new Song();
-		Path selected = Main.filesystem.getSelectedDir();
-		if(selected != null) {
-			System.out.println("About to load song: " + selected.toString());
-
-			song1 = new Song(selected, songs);
-			System.out.println(song1);
-		}
-		//create columns for songView (artist, song, etc)
-		
 		TableColumn<Song, String> artistColumn =new TableColumn<Song,String>("Artist");
 		artistColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("artist"));
 		
@@ -95,20 +88,40 @@ public class EditorController {
 		TableColumn<Song, String> yearColumn  = new TableColumn<Song,String>("Year");
 		yearColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("year"));
 		
-		//get path from FS class 
-		ObservableList<Song> songs = FXCollections.observableArrayList();
-		
-			String Artist = song1.getArtist();
-			songs.add(song1);
-			this.songTableView.setItems(songs);
-			this.songTableView.getColumns().setAll(artistColumn, titleColumn, albumColumn, yearColumn);
-			
-			
-			System.out.println("Artist: " + song1.getArtist());
-			System.out.println("Title : " + song1.getTitle());
-			System.out.println("Album : " + song1.getAlbum());
-			System.out.println("Year : " + song1.getYear());
+		this.songTableView.getColumns().setAll(artistColumn, titleColumn, albumColumn, yearColumn);
+		Path selected = Main.filesystem.getSelectedDir();
+		if(selected != null) {
+			Media m = new Media(selected.toUri().toString());
+			MediaPlayer mp = new MediaPlayer(m);
+			mp.setOnReady( 
+				new Runnable(){
+
+					@Override
+					public void run() {
+						// ALL metadata is available now that MediaPlayer is ready!
+						ObservableMap<String,Object> metadata = mp.getMedia().getMetadata();
+						System.out.println("Artist: " + (String) metadata.get("artist"));
+						System.out.println("Title: " + (String) metadata.get("title"));
+					}
+				});
 		}
 	}
 	
+// This is a secret tool that we'll use later...maybe	
+//	private String (String key, Object value) {
+//		boolean loadedValidKey = false;
+//		if (key.equals("album")) {
+//			loadedValidKey = true;
+//		} else if (key.equals("artist")) {
+//			loadedValidKey = true;
+//		} else if (key.equals("title")) {
+//			loadedValidKey = true;
+//		} else if (key.equals("year")) {
+//			loadedValidKey = true;
+//		}
+//		return loadedValidKey;
+//	}
+	
+	
 }
+	
