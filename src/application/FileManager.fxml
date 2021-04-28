@@ -31,7 +31,7 @@
          <bottom>
             <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <TextField promptText="File..." HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="fileInput" promptText="File..." HBox.hgrow="ALWAYS" />
                   <Button fx:id="openFile" mnemonicParsing="false" onAction="#loadEditor" text="Open" />
                </children>
             </HBox>

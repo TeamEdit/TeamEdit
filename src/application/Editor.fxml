@@ -59,7 +59,7 @@
                               <HBox prefHeight="199.0" prefWidth="295.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <Label prefHeight="21.0" prefWidth="57.0" text="Data" />
-                                    <ListView prefHeight="239.0" prefWidth="435.0" />
+                                    <ListView fx:id="dataList" editable="true" prefHeight="239.0" prefWidth="435.0" />
                                     <ScrollBar orientation="VERTICAL" prefHeight="100.0" prefWidth="20.0" />
                                  </children>
                               </HBox>

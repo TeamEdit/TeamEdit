@@ -25,16 +25,17 @@ import javafx.stage.Stage;
 
 
 public class FileManagerController {
-	
+
 	@FXML
-	private TextField newDir;
-	
+	private TextField newDir, fileInput;
+
 	@FXML
 	private Button openFile;
-	
+
 	@FXML
 	private ListView<Label> dirResults;
 	
+	//returns to editor view	
 	@FXML
 	private void loadEditor(ActionEvent event) {
 		try{
@@ -48,14 +49,15 @@ public class FileManagerController {
 		}
 	}
 	
+	//changes current working directory	and populates the list
 	@FXML
-	private void changeWorkDir(ActionEvent event) {
-		// Changes working directory then calls loadWorkDir 
+	private void changeWorkDir(ActionEvent event) { 
 		String newPathStr = newDir.getText();
 		Main.filesystem.setWorkDir(Paths.get(newPathStr));
 		this.loadWorkDir();
 	}
 	
+	//populates the list of files in working directory 	
 	@FXML
 	private void loadWorkDir() {
 		ObservableList<Label> ol = FXCollections.observableArrayList();
@@ -65,9 +67,10 @@ public class FileManagerController {
 				@Override
 				public void handle(MouseEvent event) {
 					Main.filesystem.setSelectedDir(p);
+					fileInput.setText(p.toString());
 				}
 			});
-				
+
 
 			l.setText(p.getFileName().toString());
 			ol.add(l);
@@ -75,9 +78,10 @@ public class FileManagerController {
 		dirResults.setItems(ol);
 	}
 	
+	//loads the list on entering scene
 	@FXML
 	private void initialize() {
 		this.loadWorkDir();
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 package application;
-	
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -14,8 +14,8 @@ import application.model.FS;
 
 public class Main extends Application {
 	public static FS filesystem;
-	
-	
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -28,7 +28,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		filesystem = new FS();
 		filesystem.setWorkDir(Paths.get("")); // Current working directory
