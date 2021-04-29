@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class FS {
 	private Path workDir;
 	private Path selectedDir;
+	private ArrayList<Path> selectedDirs;
+	
+	public FS() {
+		this.selectedDirs = new ArrayList<Path>();
+	}
 	public void setWorkDir(Path newDir) {
 		this.workDir = newDir;
 	}
@@ -18,9 +23,24 @@ public class FS {
 		return workDir;
 	}
 
-	//sets file path
+	//sets file path as selected
 	public void setSelectedDir(Path selectedDir) {
+		System.out.println("Selecting SINGLE");
 		this.selectedDir = selectedDir;
+	}
+	
+	// sets the CONTENTS of selectedDir to be selected. 
+	public void setSelectedDirContents(Path selectedDir) {
+		System.out.println("Selecting MULTIPLE");
+		if(this.selectedDirs != null) {
+			this.selectedDirs.clear();
+		}		
+		try {
+			Files.list(selectedDir).forEach(p -> {this.selectedDirs.add(p);});
+		} catch (IOException e) {
+			System.out.println("IOException while trying to read contents of directory " + workDir.toString());
+		}
+		System.out.println(this.selectedDirs.toString());
 	}
 
 	//returns file path	
