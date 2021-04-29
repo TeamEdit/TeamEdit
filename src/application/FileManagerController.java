@@ -72,16 +72,27 @@ public class FileManagerController {
 		ObservableList<Label> ol = FXCollections.observableArrayList();
 		for(Path p: Main.filesystem.lsWorkDir()) {
 			Label l = new Label();
-			l.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent event) {
-					Main.filesystem.setSelectedDir(p);
-					fileInput.setText(p.toString());
-					newDir.setText(p.toString());
-				}
-			});
-
-
+			if(Main.mode == 0) { // Song mode
+				System.out.println("Song mode selected");
+				l.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						Main.filesystem.setSelectedDir(p);
+						fileInput.setText(p.toString());
+						newDir.setText(p.toString());
+					}
+				});
+			} else if(Main.mode == 1) { // Song mode
+				System.out.println("Album mode selected");
+				l.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						Main.filesystem.setSelectedDirContents(p);
+						fileInput.setText(p.toString());
+						newDir.setText(p.toString());
+					}
+				});
+			}
 			l.setText(p.getFileName().toString());
 			ol.add(l);
 		}
