@@ -38,8 +38,9 @@ public class metaEdit {
         String title = newData.getTitle();
         title =	title.substring(0, Math.min(title.length(), 30));
 
-        String year  = String.valueOf(newData.getYear());
-        year =	year.substring(0, Math.min(year.length(), 30));
+        int year  		= newData.getYear();
+        String yearStr 	= String.valueOf(year);
+        yearStr 		= yearStr.substring(0, Math.min(yearStr.length(), 30));
 
         oID3V1_0Tag.setAlbum(album);
         oID3V1_0Tag.setArtist(artist);
@@ -47,21 +48,31 @@ public class metaEdit {
         //Maybe could be implemented with a lot of additional work
         //oID3V1_0Tag.setGenre(ID3V1Tag.Genre.<SAMPLE>);
         oID3V1_0Tag.setTitle(title);
-        oID3V1_0Tag.setYear(year);
+        oID3V1_0Tag.setYear(yearStr);
        
         // set this v1.0 tag in the media file object
         oMediaFile.setID3Tag(oID3V1_0Tag);
        
         // create a v2.3.0 tag object, and set some frames
         ID3V2_3_0Tag oID3V2_3_0Tag = new ID3V2_3_0Tag();
-        TPE1TextInformationID3V2Frame oTPE1 = new TPE1TextInformationID3V2Frame(artist);
-        oID3V2_3_0Tag.setTPE1TextInformationFrame(oTPE1);
-        //TRCKTextInformationID3V2Frame oTRCK = new TRCKTextInformationID3V2Frame(3, 9);
-        //oID3V2_3_0Tag.setTRCKTextInformationFrame(oTRCK);
-        TIT2TextInformationID3V2Frame oTIT2 = new TIT2TextInformationID3V2Frame(title);
-        oID3V2_3_0Tag.setTIT2TextInformationFrame(oTIT2);
-       
-        // set this v2.3.0 tag in the media file object
+        oID3V2_3_0Tag.setAlbum(album);  // sets TALB frame
+        oID3V2_3_0Tag.setArtist(artist);  // sets TPE1 frame
+        oID3V2_3_0Tag.setTitle(title);  // sets TIT2 frame
+        oID3V2_3_0Tag.setYear(year);  // sets TYER frame
+        
+//        TPE1TextInformationID3V2Frame oTPE1 = new TPE1TextInformationID3V2Frame(artist);
+//        oID3V2_3_0Tag.setTPE1TextInformationFrame(oTPE1);
+//        //TRCKTextInformationID3V2Frame oTRCK = new TRCKTextInformationID3V2Frame(3, 9);
+//        //oID3V2_3_0Tag.setTRCKTextInformationFrame(oTRCK);
+//        TIT2TextInformationID3V2Frame oTIT2 = new TIT2TextInformationID3V2Frame(title);
+//        oID3V2_3_0Tag.setTIT2TextInformationFrame(oTIT2);
+//        
+//        TIT2TextInformationID3V2Frame oTIT3 = new TIT2TextInformationID3V2Frame(year);
+//        oID3V2_3_0Tag.setTIT2TextInformationFrame(oTIT3);
+//        
+//        TIT2TextInformationID3V2Frame oTIT4 = new TIT2TextInformationID3V2Frame(album);
+//        oID3V2_3_0Tag.setTIT2TextInformationFrame(oTIT4);
+//        // set this v2.3.0 tag in the media file object
         oMediaFile.setID3Tag(oID3V2_3_0Tag);
        
         // update the actual file to reflect the current state of our object 
