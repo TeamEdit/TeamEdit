@@ -89,53 +89,39 @@ public class EditorController {
 		
 		if(selected != null) {
 			//create a list of objects for metadata extract
-			ArrayList<Object> list = new ArrayList<Object>();
 			Media m = new Media(selected.toUri().toString());
-			
-			//add a listener thread for metadata updates
-			m.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
-				
-				//in thread, extract metadata
-				ObservableMap<String,Object> load = m.getMetadata();
-				String artist = (String)load.get("artist");
-				String title = (String)load.get("title");
-				String album = (String)load.get("album");
-				int year = (Integer)load.get("year");
-				
-				//apply to list, for some reason will add "null" till it retrieves all the data
-				//if statement does NOT help
-				if(artist != "null" && title != "null" && album != "null" && year != 0){
-					list.add(artist);
-					list.add(title);
-					list.add(album);
-					list.add((year));
-				}
-				
-				//create another list, to get relevant data
-				ArrayList<Object> list2 = new ArrayList<Object>();
-				
-				//runs 24 times, last 4 are the metadata extracted as (artist, title, album, year)
-				//so when the list size is over 22, get the data to avoid null pointer exceptions
-				if(list.size() > 22) {
-					list2.add(list.get(20));
-					list2.add(list.get(21));
-					list2.add(list.get(22));
-					list2.add(list.get(23));
-					
-					//song constructor needs an integer
-					String year2 = list2.get(3).toString();
-					
-					//create song object
-					Song song = new Song((String)list2.get(0), (String)list2.get(1), (String)list2.get(2), Integer.parseInt(year2));
-					
-					//add to observable list
-					Main.songs.add(song);
-					
-					//apply items
-					this.songTableView.setItems(Main.songs);
-				}
-			});
+			MediaPlayer mp = new MediaPlayer(m);
+			mp.setOnReady( 
+					new Runnable(){
+
+						@Override
+						public void run() {
+							// ALL metadata is available now that MediaPlayer is ready!
+							ObservableMap<String,Object> metadata = mp.getMedia().getMetadata();
+							System.out.println("Artist: " + (String) metadata.get("artist"));
+							System.out.println("Title: " + (String) metadata.get("title"));
+						}
+					});
+				// Handles metadata in new thread.
+				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
 		}
+		
+	}
+	public Thread handleMetadata(ObservableMap<String,Object> metadata) {
+		Thread t = new Thread(() -> {
+			String artist = (String) metadata.get("artist");
+			String title  = (String) metadata.get("title");
+			int year   	  = (int) metadata.get("year"); 
+			String album  = (String) metadata.get("album");
+			Song song 	  = new Song(artist, title, album, year);
+			Main.songs.add(song);
+			this.songTableView.setItems(Main.songs);
+			System.out.println("Artist: " + song.getArtist());
+			System.out.println("Title: " + song.getTitle());
+			System.out.println("Album: " + song.getAlbum());
+			System.out.println("Year: " + song.getYear());
+		});
+		return t;
 	}
 }
 
