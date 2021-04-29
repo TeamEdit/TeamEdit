@@ -40,4 +40,16 @@ public class FS {
 		}
 		return ls;
 	}
+	
+	public ArrayList<Path> getDirContents(Path dir) {
+		ArrayList<Path> ls = new ArrayList<Path>();
+		try {
+			Files.list(dir).forEach(p -> {
+				ls.add(p);
+			});
+		} catch (IOException e) {
+			System.out.println("IOException while trying to read contents of directory " + workDir.toString());
+		}
+		return ls;
+	}
 }

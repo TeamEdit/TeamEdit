@@ -18,7 +18,7 @@ public class Main extends Application {
 	public static FS filesystem;
 	public static ObservableList<Song> songs = FXCollections.observableArrayList();
 
-
+	public static int mode;
 	@Override
 	public void start(Stage primaryStage) {
 		try {

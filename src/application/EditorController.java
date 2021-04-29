@@ -42,6 +42,10 @@ public class EditorController {
 
 	@FXML
 	void showLoad(ActionEvent event){
+		MenuItem clicked = (MenuItem) event.getSource();
+		if( clicked.getId().equals("importSong") ) Main.mode = 0; // Import song
+		else if (clicked.getId().equals("importAlbum")) Main.mode = 1; // Import album
+		
 		try{
 			Stage stage = (Stage) theMenu.getScene().getWindow();
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("FileManager.fxml"));
@@ -103,7 +107,7 @@ public class EditorController {
 						}
 					});
 				// Handles metadata in new thread.
-				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+			mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
 		}
 		
 	}
