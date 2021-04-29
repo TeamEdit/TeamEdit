@@ -7,6 +7,18 @@ import org.blinkenlights.jid3.v1.*;
 import org.blinkenlights.jid3.v2.*;
 
 public class metaEdit {
+	
+	public static void main(String []args) {
+		metaEdit me = new metaEdit();
+		Song s = new Song("Kero Kero Bonito", "Waiting", "Bonito Generation", 2020);
+		String filename = "song.mp3";
+		try {
+			me.editFile(filename, s);
+		} catch (ID3Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void editFile(String iFile, Song newData) throws ID3Exception {
 		// the file we are going to modify
         File oSourceFile = new File(iFile);
@@ -16,24 +28,37 @@ public class metaEdit {
 
         // create a v1.0 tag object, and set some values
         ID3V1_0Tag oID3V1_0Tag = new ID3V1_0Tag();
-        oID3V1_0Tag.setAlbum(newData.getAlbum().substring(0, 30));
-        oID3V1_0Tag.setArtist(newData.getArtist().substring(0, 30));
+        
+        String album = newData.getAlbum();
+        album =	album.substring(0, Math.min(album.length(), 30));
+
+        String artist = newData.getArtist();
+        artist = artist.substring(0, Math.min(artist.length(), 30));
+
+        String title = newData.getTitle();
+        title =	title.substring(0, Math.min(title.length(), 30));
+
+        String year  = String.valueOf(newData.getYear());
+        year =	year.substring(0, Math.min(year.length(), 30));
+
+        oID3V1_0Tag.setAlbum(album);
+        oID3V1_0Tag.setArtist(artist);
         //Genre in v1.0 is a disaster. It's a single bit character that corresponds with a 255 bit list
         //Maybe could be implemented with a lot of additional work
         //oID3V1_0Tag.setGenre(ID3V1Tag.Genre.<SAMPLE>);
-        oID3V1_0Tag.setTitle(newData.getTitle().substring(0, 30));
-        oID3V1_0Tag.setYear(String.valueOf(newData.getYear()).substring(0, 4));
+        oID3V1_0Tag.setTitle(title);
+        oID3V1_0Tag.setYear(year);
        
         // set this v1.0 tag in the media file object
         oMediaFile.setID3Tag(oID3V1_0Tag);
        
         // create a v2.3.0 tag object, and set some frames
         ID3V2_3_0Tag oID3V2_3_0Tag = new ID3V2_3_0Tag();
-        TPE1TextInformationID3V2Frame oTPE1 = new TPE1TextInformationID3V2Frame(newData.getArtist());
+        TPE1TextInformationID3V2Frame oTPE1 = new TPE1TextInformationID3V2Frame(artist);
         oID3V2_3_0Tag.setTPE1TextInformationFrame(oTPE1);
         //TRCKTextInformationID3V2Frame oTRCK = new TRCKTextInformationID3V2Frame(3, 9);
         //oID3V2_3_0Tag.setTRCKTextInformationFrame(oTRCK);
-        TIT2TextInformationID3V2Frame oTIT2 = new TIT2TextInformationID3V2Frame(newData.getTitle());
+        TIT2TextInformationID3V2Frame oTIT2 = new TIT2TextInformationID3V2Frame(title);
         oID3V2_3_0Tag.setTIT2TextInformationFrame(oTIT2);
        
         // set this v2.3.0 tag in the media file object
