@@ -2,7 +2,6 @@ package application;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import javafx.scene.media.MediaPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
@@ -45,7 +44,7 @@ public class EditorController {
 		MenuItem clicked = (MenuItem) event.getSource();
 		if( clicked.getId().equals("importSong") ) Main.mode = 0; // Import song
 		else if (clicked.getId().equals("importAlbum")) Main.mode = 1; // Import album
-		
+
 		try{
 			Stage stage = (Stage) theMenu.getScene().getWindow();
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("FileManager.fxml"));
@@ -56,14 +55,6 @@ public class EditorController {
 			e.printStackTrace();
 		}
 
-	}
-
-	@FXML
-
-	void playSong(ActionEvent event) {
-	ObservableList<Song> song = songTableView.getSelectionModel().getSelectedItems();
-	
-	
 	}
 
 	/* Required in order to display the songs in the pane when the FileManagerController loads the EditorController. 
@@ -89,8 +80,8 @@ public class EditorController {
 		yearColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("year"));
 
 		this.songTableView.getColumns().setAll(artistColumn, titleColumn, albumColumn, yearColumn);
-		
-		
+
+
 		ArrayList<Path> selectedSongs = Main.filesystem.getSelectedDirs();
 		if(selectedSongs != null && !selectedSongs.isEmpty()) {
 			for(Path selected : selectedSongs) {
@@ -111,11 +102,22 @@ public class EditorController {
 						});
 				// Handles metadata in new thread.
 				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+				songTableView.setOnMousePressed(e ->{
+					if (e.getClickCount() == 2 && e.isPrimaryButtonDown() ){
+						ObservableList<String> ol = FXCollections.observableArrayList();
+						Song song = songTableView.getSelectionModel().getSelectedItem();
+						ol.add(song.getArtist());
+						ol.add(song.getTitle());
+						ol.add(song.getAlbum());
+						ol.add(String.valueOf(song.getYear()));
+						dataList.setItems(ol);
+					}
+				});
 			}
 		}
 
-		
-		
+
+
 	}
 	public Thread handleMetadata(ObservableMap<String,Object> metadata) {
 		Thread t = new Thread(() -> {
