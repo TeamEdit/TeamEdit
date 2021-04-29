@@ -89,26 +89,32 @@ public class EditorController {
 		yearColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("year"));
 
 		this.songTableView.getColumns().setAll(artistColumn, titleColumn, albumColumn, yearColumn);
-		Path selected = Main.filesystem.getSelectedDir();
 		
-		if(selected != null) {
-			//create a list of objects for metadata extract
-			Media m = new Media(selected.toUri().toString());
-			MediaPlayer mp = new MediaPlayer(m);
-			mp.setOnReady( 
-					new Runnable(){
+		
+		ArrayList<Path> selectedSongs = Main.filesystem.getSelectedDirs();
+		if(selectedSongs != null && !selectedSongs.isEmpty()) {
+			for(Path selected : selectedSongs) {
+				System.out.println("Getting metadata for one song");
+				//create a list of objects for metadata extract
+				Media m = new Media(selected.toUri().toString());
+				MediaPlayer mp = new MediaPlayer(m);
+				mp.setOnReady( 
+						new Runnable(){
 
-						@Override
-						public void run() {
-							// ALL metadata is available now that MediaPlayer is ready!
-							ObservableMap<String,Object> metadata = mp.getMedia().getMetadata();
-							System.out.println("Artist: " + (String) metadata.get("artist"));
-							System.out.println("Title: " + (String) metadata.get("title"));
-						}
-					});
+							@Override
+							public void run() {
+								// ALL metadata is available now that MediaPlayer is ready!
+								ObservableMap<String,Object> metadata = mp.getMedia().getMetadata();
+								System.out.println("Artist: " + (String) metadata.get("artist"));
+								System.out.println("Title: " + (String) metadata.get("title"));
+							}
+						});
 				// Handles metadata in new thread.
-			mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+			}
 		}
+
+		
 		
 	}
 	public Thread handleMetadata(ObservableMap<String,Object> metadata) {

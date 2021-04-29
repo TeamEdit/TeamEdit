@@ -5,10 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import application.Main;
+
 //class for creating directory and selected file, Path objects
 public class FS {
 	private Path workDir;
-	private Path selectedDir;
+	// private Path selectedDir;
 	private ArrayList<Path> selectedDirs;
 	
 	public FS() {
@@ -23,30 +25,27 @@ public class FS {
 		return workDir;
 	}
 
-	//sets file path as selected
 	public void setSelectedDir(Path selectedDir) {
-		System.out.println("Selecting SINGLE");
-		this.selectedDir = selectedDir;
+		this.setSelectedDirs(selectedDir);
 	}
 	
-	// sets the CONTENTS of selectedDir to be selected. 
-	public void setSelectedDirContents(Path selectedDir) {
-		System.out.println("Selecting MULTIPLE");
-		if(this.selectedDirs != null) {
-			this.selectedDirs.clear();
-		}		
-		try {
-			Files.list(selectedDir).forEach(p -> {this.selectedDirs.add(p);});
-		} catch (IOException e) {
-			System.out.println("IOException while trying to read contents of directory " + workDir.toString());
+	
+	//sets file path as selected
+	public void setSelectedDirs(Path selectedDir) {
+		if(this.selectedDirs != null && !this.selectedDirs.isEmpty()) this.selectedDirs.clear();
+		if(Main.mode == 0) {
+			this.selectedDirs.add(selectedDir);
 		}
-		System.out.println(this.selectedDirs.toString());
+		else if (Main.mode == 1) {
+			this.selectedDirs = this.getDirContents(selectedDir);
+		}
 	}
-
+	
 	//returns file path	
-	public Path getSelectedDir() {
-		return selectedDir;
+	public ArrayList<Path> getSelectedDirs() {
+		return this.selectedDirs;
 	}
+	
 
 	//creates and returns a list of files in current working directory
 	public ArrayList<Path> lsWorkDir() {
@@ -61,9 +60,10 @@ public class FS {
 		return ls;
 	}
 	
-	public ArrayList<Path> getDirContents(Path dir) {
+	private ArrayList<Path> getDirContents(Path dir) {
 		ArrayList<Path> ls = new ArrayList<Path>();
 		try {
+			System.out.println("dir: " + dir.toString());
 			Files.list(dir).forEach(p -> {
 				ls.add(p);
 			});
