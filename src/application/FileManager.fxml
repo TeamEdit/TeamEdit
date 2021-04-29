@@ -23,8 +23,8 @@
          <top>
             <HBox alignment="CENTER_RIGHT">
                <children>
-                  <TextField fx:id="newDir" promptText="Directory..." HBox.hgrow="ALWAYS" />
                   <Button fx:id="cdButton" mnemonicParsing="false" onAction="#changeWorkDir" text="Go" />
+                  <TextField fx:id="newDir" promptText="Directory..." HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </top>

@@ -48,7 +48,16 @@ public class FileManagerController {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@FXML
+	public void clickItem(MouseEvent event)
+	{
+	    if (event.getClickCount() == 2) //Checking double click
+	    {
+	        System.out.println(dirResults.getSelectionModel().getSelectedItem());
+	    }
+	}
+	
 	//changes current working directory	and populates the list
 	@FXML
 	private void changeWorkDir(ActionEvent event) { 

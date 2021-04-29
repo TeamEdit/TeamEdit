@@ -1,6 +1,8 @@
 package application;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -10,9 +12,11 @@ import javafx.fxml.FXMLLoader;
 import java.nio.file.Paths;
 
 import application.model.FS;
+import application.model.Song;
 
 public class Main extends Application {
 	public static FS filesystem;
+	public static ObservableList<Song> songs = FXCollections.observableArrayList();
 
 
 	@Override
