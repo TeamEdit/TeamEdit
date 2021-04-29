@@ -34,7 +34,7 @@ public class FileManagerController {
 
 	@FXML
 	private ListView<Label> dirResults;
-	
+
 	//returns to editor view	
 	@FXML
 	private void loadEditor(ActionEvent event) {
@@ -48,7 +48,7 @@ public class FileManagerController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//changes current working directory	and populates the list
 	@FXML
 	private void changeWorkDir(ActionEvent event) { 
@@ -56,7 +56,7 @@ public class FileManagerController {
 		Main.filesystem.setWorkDir(Paths.get(newPathStr));
 		this.loadWorkDir();
 	}
-	
+
 	//populates the list of files in working directory 	
 	@FXML
 	private void loadWorkDir() {
@@ -68,6 +68,7 @@ public class FileManagerController {
 				public void handle(MouseEvent event) {
 					Main.filesystem.setSelectedDir(p);
 					fileInput.setText(p.toString());
+					newDir.setText(p.toString());
 				}
 			});
 
@@ -77,7 +78,7 @@ public class FileManagerController {
 		}
 		dirResults.setItems(ol);
 	}
-	
+
 	//loads the list on entering scene
 	@FXML
 	private void initialize() {

@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 //sets up the song class, string properties
 public final class Song extends SimpleObjectProperty<String>{
 	private StringProperty artist;
@@ -12,11 +13,12 @@ public final class Song extends SimpleObjectProperty<String>{
 	private StringProperty album;
 	private SimpleIntegerProperty year;
 
+	//constructor for the song class
 	public Song(String artist, String title, String album, int year) {
-			this.setArtist(artist);
-			this.setTitle(title);
-			this.setAlbum(album);
-			this.setYear(year);
+		this.setArtist(artist);
+		this.setTitle(title);
+		this.setAlbum(album);
+		this.setYear(year);
 	}
 
 	// Artist getters / setters
@@ -78,5 +80,5 @@ public final class Song extends SimpleObjectProperty<String>{
 	public void setTitle(String title) {
 		getTitleProperty().set(title);
 	}
-	
+
 }

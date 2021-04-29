@@ -2,7 +2,9 @@ package application;
 import java.nio.file.Path;
 
 import javafx.scene.media.MediaPlayer;
-
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +25,7 @@ import application.model.*;
 public class EditorController {
 
 	@FXML 
-	public TableView<Song> songTableView;
+	public TableView<Object> songTableView;
 
 	@FXML ListView dataList;
 
@@ -35,8 +37,8 @@ public class EditorController {
 
 	@FXML
 	private MenuBar theMenu;
-	
-	
+
+
 	@FXML
 	void showLoad(ActionEvent event){
 		try{
@@ -69,28 +71,41 @@ public class EditorController {
 	// Is called when Editor.fxml loads the EditorController.java
 	@FXML
 	void initialize() {
-		TableColumn<Song, String> artistColumn =new TableColumn<Song,String>("Artist");
-		artistColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("artist"));
 		
-		TableColumn<Song, String> titleColumn  = new TableColumn<Song,String>("Title");
-		titleColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("title"));
-		
-		TableColumn<Song, String> albumColumn  = new TableColumn<Song,String>("Album");
-		albumColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("album"));
-		
-		TableColumn<Song, String> yearColumn  = new TableColumn<Song,String>("Year");
-		yearColumn.setCellValueFactory(new PropertyValueFactory<Song,String>("year"));
-		
+		TableColumn<Object, String> artistColumn =new TableColumn<Object,String>("Artist");
+		artistColumn.setCellValueFactory(new PropertyValueFactory<Object,String>("artist"));
+
+		TableColumn<Object, String> titleColumn  = new TableColumn<Object,String>("Title");
+		titleColumn.setCellValueFactory(new PropertyValueFactory<Object,String>("title"));
+
+		TableColumn<Object, String> albumColumn  = new TableColumn<Object,String>("Album");
+		albumColumn.setCellValueFactory(new PropertyValueFactory<Object,String>("album"));
+
+		TableColumn<Object, String> yearColumn  = new TableColumn<Object,String>("Year");
+		yearColumn.setCellValueFactory(new PropertyValueFactory<Object,String>("year"));
+
 		this.songTableView.getColumns().setAll(artistColumn, titleColumn, albumColumn, yearColumn);
+		
 		Path selected = Main.filesystem.getSelectedDir();
 		if(selected != null) {
+			Song song;
+			ObservableList<Object> songs = FXCollections.observableArrayList();
 			Media m = new Media(selected.toUri().toString());
+			m.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+				ObservableMap<String,Object> load = m.getMetadata();
+				songs.addAll(load);
+			});
+			System.out.println(songs);
+			MediaPlayer player = new MediaPlayer(m);
 			MediaPlayer mp = new MediaPlayer(m);
 			// Handles metadata in new thread.
+			
+			
 			mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+    		this.songTableView.setItems(songs);
 		}
 	}
-	
+
 
 	public Thread handleMetadata(ObservableMap<String,Object> metadata) {
 		Thread t = new Thread(() -> {
@@ -106,6 +121,6 @@ public class EditorController {
 		});
 		return t;
 	}
-	
+
 }
-	
+

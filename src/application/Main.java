@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import java.nio.file.Paths;
 
 import application.model.FS;
-// My name is ...
 
 public class Main extends Application {
 	public static FS filesystem;
