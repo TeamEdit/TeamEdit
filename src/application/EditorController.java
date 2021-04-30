@@ -19,6 +19,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.*;
 import javafx.stage.Stage;
@@ -27,12 +28,12 @@ import application.model.*;
 
 public class EditorController {
 
-	
+	private ObservableList<String> editingSong; // Song we are currently editing
 	
 	@FXML 
 	public TableView<Song> songTableView;
 
-	@FXML ListView dataList;
+	@FXML ListView<String> dataList;
 
 	@FXML 
 	public Button applyButton;
@@ -112,13 +113,15 @@ public class EditorController {
 				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
 				songTableView.setOnMousePressed(e ->{
 					if (e.getClickCount() == 2 && e.isPrimaryButtonDown() ){
-						ObservableList<String> ol = FXCollections.observableArrayList();
+						this.editingSong = FXCollections.observableArrayList();
 						Song song = songTableView.getSelectionModel().getSelectedItem();
-						ol.add(song.getArtist());
-						ol.add(song.getTitle());
-						ol.add(song.getAlbum());
-						ol.add(String.valueOf(song.getYear()));
-						dataList.setItems(ol);
+						this.editingSong.add(song.getArtist());
+						this.editingSong.add(song.getTitle());
+						this.editingSong.add(song.getAlbum());
+						this.editingSong.add(String.valueOf(song.getYear()));
+						this.dataList.setItems(this.editingSong);
+						this.dataList.setEditable(true);
+						this.dataList.setCellFactory(TextFieldListCell.forListView());
 					}
 				});
 			}
@@ -147,7 +150,13 @@ public class EditorController {
 	@FXML
 	public void saveMetadata(ActionEvent event) {
 		System.out.println("apply button clicked");
-		Song s = new Song("Kero Kero Bonito", "Waiting", "Bonito Generation", 2020);
+		System.out.println(this.editingSong.toString());
+		String artist = this.editingSong.get(0);
+		String title  = this.editingSong.get(1);
+		String album  = this.editingSong.get(2);
+		int year	  = (Integer.valueOf(this.editingSong.get(3)));
+		System.out.println("New Artist Value: " + artist);
+		Song s = new Song(artist, title, album, year);
 		String filename = "song.mp3";
 		try {
 			metaEdit.editFile(filename, s);
