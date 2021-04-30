@@ -1,12 +1,11 @@
 package application;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.blinkenlights.jid3.ID3Exception;
 
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
@@ -27,6 +26,8 @@ import javafx.stage.Stage;
 
 import application.model.*;
 
+
+// EditorController : controller for the Editor / Player scene
 public class EditorController {
 
 	private ObservableList<String> editingSongData; // Song we are currently editing
@@ -99,9 +100,7 @@ public class EditorController {
 
 		ArrayList<Path> selectedSongs = Main.filesystem.getSelectedDirs();
 		if(selectedSongs != null && !selectedSongs.isEmpty()) {
-			System.out.println("loading songs");
 			for(Path selected : selectedSongs) {
-				System.out.println("Getting metadata for one song");
 				//create a list of objects for metadata extract
 				Media m = new Media(selected.toUri().toString());
 				MediaPlayer mp = new MediaPlayer(m);
@@ -141,10 +140,6 @@ public class EditorController {
 			song.setPath(p);
 			Main.songs.add(song);
 			this.songTableView.setItems(Main.songs);
-			System.out.println("Artist: " + song.getArtist());
-			System.out.println("Title: " + song.getTitle());
-			System.out.println("Album: " + song.getAlbum());
-			System.out.println("Year: " + song.getYear());
 		});
 		return t;
 	}
