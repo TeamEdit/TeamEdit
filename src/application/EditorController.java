@@ -108,7 +108,7 @@ public class EditorController {
 				// Handles metadata in new thread.
 				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata(), selected ) );
 				songTableView.setOnMousePressed(e ->{
-					if (e.getClickCount() == 2 && e.isPrimaryButtonDown() ){
+					if (e.getClickCount() == 1 && e.isPrimaryButtonDown() ){
 						this.editingSongData = FXCollections.observableArrayList();
 						this.editingSong     = songTableView.getSelectionModel().getSelectedItem();
 						this.editingSongData.add(this.editingSong.getArtist());
@@ -118,9 +118,11 @@ public class EditorController {
 						this.dataList.setItems(this.editingSongData);
 						this.dataList.setEditable(true);
 						this.dataList.setCellFactory(TextFieldListCell.forListView());
+					} else if ( e.getClickCount() == 2 && e.isPrimaryButtonDown()  ) {
 						path2 = this.editingSong.getPath();
 						media = new Media(path2.toUri().toString());
 						player = new MediaPlayer(media);
+						player.play();
 					}
 				});
 			}
