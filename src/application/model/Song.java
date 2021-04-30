@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+// Song : class to represent our Song data
 //sets up the song class, string properties
 public final class Song extends SimpleObjectProperty<String>{
 	private StringProperty artist;

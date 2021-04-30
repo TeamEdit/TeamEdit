@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import application.Main;
 
-//class for creating directory and selected file, Path objects
+//FS: class for creating directory and selected file, Path objects
 public class FS {
 	private Path workDir;
 	// private Path selectedDir;
@@ -66,7 +66,6 @@ public class FS {
 		// only mp3 please
 		ArrayList<Path> ls = new ArrayList<Path>();
 		try {
-			System.out.println("dir: " + dir.toString());
 			Files.list(dir).forEach(p -> {
 				if(p.getFileName().toString().endsWith(".mp3"))
 					ls.add(p);

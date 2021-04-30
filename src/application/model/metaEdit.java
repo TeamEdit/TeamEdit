@@ -6,18 +6,10 @@ import org.blinkenlights.jid3.*;
 import org.blinkenlights.jid3.v1.*;
 import org.blinkenlights.jid3.v2.*;
 
+// metaEdit : class for editing metadata. We only use the editFile
 public class metaEdit {
 	
-	public static void main(String []args) {
-		Song s = new Song("Kero Kero Bonito", "Waiting", "Bonito Generation", 2020);
-		String filename = "song.mp3";
-		try {
-			editFile(filename, s);
-		} catch (ID3Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	public static void editFile(String iFile, Song newData) throws ID3Exception {
 		// the file we are going to modify
         File oSourceFile = new File(iFile);
