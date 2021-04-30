@@ -37,7 +37,7 @@ public class EditorController {
 	@FXML ListView<String> dataList;
 
 	@FXML 
-	public Button applyButton;
+	public Button applyButton, playBut, stopBut;
 	
 	@FXML
 	private MenuItem importSong;
@@ -49,6 +49,8 @@ public class EditorController {
 	private MenuBar theMenu;
 
 	private Song editingSong;
+	private Media media;
+	private MediaPlayer player;
 
 
 	@FXML
@@ -115,6 +117,10 @@ public class EditorController {
 						this.dataList.setEditable(true);
 						this.dataList.setCellFactory(TextFieldListCell.forListView());
 					}
+					if (e.getClickCount() == 1 && e.isPrimaryButtonDown() ){
+						media = m;
+						player = new MediaPlayer(media);
+					}
 				});
 			}
 		}
@@ -168,6 +174,16 @@ public class EditorController {
 			System.out.println("ID3Exception when saving metadata");
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void playSong(ActionEvent event) {
+		player.play();
+	}
+	
+	@FXML
+	public void stopSong(ActionEvent event) {
+		player.stop();
 	}
 }
 
