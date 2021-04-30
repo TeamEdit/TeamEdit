@@ -18,7 +18,8 @@ User can select to import a "Song" or "Album".
 If "Song" is selected, the user may select and import a single .mp3 file.
 If "Album" is selected, the user may select and import a directory which contains .mp3 files.
 
+Once a file is importing to the Editor, the user can select it from the list by double clicking. The user can change the metadata in the text fields in the bottom right section, after making changes in any text field hit Enter. Then apply changes with the "Apply" button. They can also play the song with the play button, then stop the song with the stop button.
 
-
-Known Bugs
-Due to ID3 byte coding of genre, user may run into trouble with certain genre types. 
+--Known Bugs--
+Due to ID3 byte coding of genre, user may run into trouble with certain genre types.
+Program fails if the .mp3 file is open in another program due to read-lock.
