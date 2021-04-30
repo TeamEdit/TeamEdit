@@ -34,7 +34,8 @@ public class FS {
 	public void setSelectedDirs(Path selectedDir) {
 		if(this.selectedDirs != null && !this.selectedDirs.isEmpty()) this.selectedDirs.clear();
 		if(Main.mode == 0) {
-			this.selectedDirs.add(selectedDir);
+			if(selectedDir.getFileName().endsWith(".mp3"))
+				this.selectedDirs.add(selectedDir);
 		}
 		else if (Main.mode == 1) {
 			this.selectedDirs = this.getDirContents(selectedDir);
@@ -61,11 +62,13 @@ public class FS {
 	}
 	
 	private ArrayList<Path> getDirContents(Path dir) {
+		// only mp3 please
 		ArrayList<Path> ls = new ArrayList<Path>();
 		try {
 			System.out.println("dir: " + dir.toString());
 			Files.list(dir).forEach(p -> {
-				ls.add(p);
+				if(p.getFileName().endsWith(".mp3"))
+					ls.add(p);
 			});
 		} catch (IOException e) {
 			System.out.println("IOException while trying to read contents of directory " + workDir.toString());
