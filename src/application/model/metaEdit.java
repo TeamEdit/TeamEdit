@@ -9,17 +9,16 @@ import org.blinkenlights.jid3.v2.*;
 public class metaEdit {
 	
 	public static void main(String []args) {
-		metaEdit me = new metaEdit();
 		Song s = new Song("Kero Kero Bonito", "Waiting", "Bonito Generation", 2020);
 		String filename = "song.mp3";
 		try {
-			me.editFile(filename, s);
+			editFile(filename, s);
 		} catch (ID3Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void editFile(String iFile, Song newData) throws ID3Exception {
+	public static void editFile(String iFile, Song newData) throws ID3Exception {
 		// the file we are going to modify
         File oSourceFile = new File(iFile);
 
