@@ -98,6 +98,7 @@ public class EditorController {
 
 		ArrayList<Path> selectedSongs = Main.filesystem.getSelectedDirs();
 		if(selectedSongs != null && !selectedSongs.isEmpty()) {
+			System.out.println("loading songs");
 			for(Path selected : selectedSongs) {
 				System.out.println("Getting metadata for one song");
 				//create a list of objects for metadata extract
@@ -116,11 +117,10 @@ public class EditorController {
 						this.dataList.setItems(this.editingSongData);
 						this.dataList.setEditable(true);
 						this.dataList.setCellFactory(TextFieldListCell.forListView());
-					}
-					if (e.getClickCount() == 1 && e.isPrimaryButtonDown() ){
+					}/*else if (e.getClickCount() == 1 && e.isPrimaryButtonDown() ){
 						media = m;
 						player = new MediaPlayer(media);
-					}
+					}*/
 				});
 			}
 		}
@@ -138,10 +138,10 @@ public class EditorController {
 			song.setPath(p);
 			Main.songs.add(song);
 			this.songTableView.setItems(Main.songs);
-//			System.out.println("Artist: " + song.getArtist());
-//			System.out.println("Title: " + song.getTitle());
-//			System.out.println("Album: " + song.getAlbum());
-//			System.out.println("Year: " + song.getYear());
+			System.out.println("Artist: " + song.getArtist());
+			System.out.println("Title: " + song.getTitle());
+			System.out.println("Album: " + song.getAlbum());
+			System.out.println("Year: " + song.getYear());
 		});
 		return t;
 	}

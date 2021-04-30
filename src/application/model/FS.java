@@ -34,8 +34,9 @@ public class FS {
 	public void setSelectedDirs(Path selectedDir) {
 		if(this.selectedDirs != null && !this.selectedDirs.isEmpty()) this.selectedDirs.clear();
 		if(Main.mode == 0) {
-			if(selectedDir.getFileName().endsWith(".mp3"))
+			if(selectedDir.getFileName().toString().endsWith(".mp3")) {
 				this.selectedDirs.add(selectedDir);
+			}
 		}
 		else if (Main.mode == 1) {
 			this.selectedDirs = this.getDirContents(selectedDir);
@@ -67,7 +68,7 @@ public class FS {
 		try {
 			System.out.println("dir: " + dir.toString());
 			Files.list(dir).forEach(p -> {
-				if(p.getFileName().endsWith(".mp3"))
+				if(p.getFileName().toString().endsWith(".mp3"))
 					ls.add(p);
 			});
 		} catch (IOException e) {
