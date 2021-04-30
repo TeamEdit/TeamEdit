@@ -2,62 +2,101 @@ package application.model;
 
 import java.nio.file.Path;
 
-public class Song {
-    private String artist = null;
-    private String title = null;
-    private String album = null;
-    private int number = -1;
-    private String filepathStr = null;
-    private Path filepath;
-    
-    public Song(String artist, String title, String album, int number, Path filepath) {
-    	this.setAlbum(album);
-    	this.setArtist(artist);
-    	this.setTitle(title);
-    	this.setNumber(number);
-    	this.setFilepath(filepath);
-    	this.setFilepathStr(filepath.toString());
-    }
-    
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+// Song : class to represent our Song data
+//sets up the song class, string properties
+public final class Song extends SimpleObjectProperty<String>{
+	private StringProperty artist;
+	private StringProperty title;
+	private StringProperty album;
+	private SimpleIntegerProperty year;
+	private Path path;
+
+	//constructor for the song class
+	public Song(String artist, String title, String album, int year) {
+		this.setArtist(artist);
+		this.setTitle(title);
+		this.setAlbum(album);
+		this.setYear(year);
+	}
+
+	// Artist getters / setters
 	public String getArtist() {
-		return artist;
+		return getArtistProperty().get();
 	}
+
+	public StringProperty getArtistProperty() {
+		if( this.artist == null ) 
+			this.artist = new SimpleStringProperty(this, "artist");
+		return this.artist;
+	}
+
 	public void setArtist(String artist) {
-		this.artist = artist;
+		getArtistProperty().set(artist);
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+
+	// Album getters / setters
 	public String getAlbum() {
-		return album;
+		return getAlbumProperty().get();
 	}
+
+	public StringProperty getAlbumProperty() {
+		if( this.album == null ) 
+			this.album = new SimpleStringProperty(this, "album");
+		return this.album;
+	}
+
 	public void setAlbum(String album) {
-		this.album = album;
-	}
-	public int getNumber() {
-		return number;
-	}
-	public void setNumber(int number) {
-		this.number = number;
+		getAlbumProperty().set(album);
 	}
 
-	public String getFilepathStr() {
-		return filepathStr;
+	// Year getters / setters	
+	public int getYear() {
+		return getYearProperty().get();
 	}
 
-	public void setFilepathStr(String filepathStr) {
-		this.filepathStr = filepathStr;
+	public IntegerProperty getYearProperty() {
+		if( this.year == null ) 
+			this.year = new SimpleIntegerProperty(this, "year");
+		return this.year;
+	}
+
+	public void setYear(int year) {
+		getYearProperty().set(year);
+	}
+
+	// Title getters / setters
+	public String getTitle() {
+		return getTitleProperty().get();
+	}
+
+	public StringProperty getTitleProperty() {
+		if( this.title == null ) 
+			this.title = new SimpleStringProperty(this, "title");
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		getTitleProperty().set(title);
 	}
 	
-	public Path getFilepath() { 
-		return filepath;
+	public void setPath(Path p) {
+		this.path = p;
 	}
 	
-	public void setFilepath(Path filepath) {
-		this.filepath = filepath;
+	public Path getPath() {
+		return this.path;
 	}
-    
+	
+	public String toString() {
+		
+		return "Artist: " + this.getArtist() + ", Title: " + this.getTitle() + ", Album: " + this.getAlbum() + ", Year: " + this.getYear();
+		
+	}
+
 }

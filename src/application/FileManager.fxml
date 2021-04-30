@@ -23,15 +23,15 @@
          <top>
             <HBox alignment="CENTER_RIGHT">
                <children>
-                  <TextField fx:id="newDir" promptText="Directory..." HBox.hgrow="ALWAYS" />
                   <Button fx:id="cdButton" mnemonicParsing="false" onAction="#changeWorkDir" text="Go" />
+                  <TextField fx:id="newDir" promptText="Directory..." HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </top>
          <bottom>
             <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <TextField promptText="File..." HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="fileInput" promptText="File..." HBox.hgrow="ALWAYS" />
                   <Button fx:id="openFile" mnemonicParsing="false" onAction="#loadEditor" text="Open" />
                </children>
             </HBox>
