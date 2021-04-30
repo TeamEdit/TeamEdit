@@ -1,5 +1,6 @@
 package application;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.blinkenlights.jid3.ID3Exception;
@@ -28,7 +29,7 @@ import application.model.*;
 
 public class EditorController {
 
-	private ObservableList<String> editingSong; // Song we are currently editing
+	private ObservableList<String> editingSongData; // Song we are currently editing
 	
 	@FXML 
 	public TableView<Song> songTableView;
@@ -46,6 +47,8 @@ public class EditorController {
 
 	@FXML
 	private MenuBar theMenu;
+
+	private Song editingSong;
 
 
 	@FXML
@@ -98,28 +101,17 @@ public class EditorController {
 				//create a list of objects for metadata extract
 				Media m = new Media(selected.toUri().toString());
 				MediaPlayer mp = new MediaPlayer(m);
-				mp.setOnReady( 
-						new Runnable(){
-
-							@Override
-							public void run() {
-								// ALL metadata is available now that MediaPlayer is ready!
-								ObservableMap<String,Object> metadata = mp.getMedia().getMetadata();
-								System.out.println("Artist: " + (String) metadata.get("artist"));
-								System.out.println("Title: " + (String) metadata.get("title"));
-							}
-						});
 				// Handles metadata in new thread.
-				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata()) );
+				mp.setOnReady( handleMetadata(mp.getMedia().getMetadata(), selected ) );
 				songTableView.setOnMousePressed(e ->{
 					if (e.getClickCount() == 2 && e.isPrimaryButtonDown() ){
-						this.editingSong = FXCollections.observableArrayList();
-						Song song = songTableView.getSelectionModel().getSelectedItem();
-						this.editingSong.add(song.getArtist());
-						this.editingSong.add(song.getTitle());
-						this.editingSong.add(song.getAlbum());
-						this.editingSong.add(String.valueOf(song.getYear()));
-						this.dataList.setItems(this.editingSong);
+						this.editingSongData = FXCollections.observableArrayList();
+						this.editingSong     = songTableView.getSelectionModel().getSelectedItem();
+						this.editingSongData.add(this.editingSong.getArtist());
+						this.editingSongData.add(this.editingSong.getTitle());
+						this.editingSongData.add(this.editingSong.getAlbum());
+						this.editingSongData.add(String.valueOf(this.editingSong.getYear()));
+						this.dataList.setItems(this.editingSongData);
 						this.dataList.setEditable(true);
 						this.dataList.setCellFactory(TextFieldListCell.forListView());
 					}
@@ -130,37 +122,48 @@ public class EditorController {
 
 
 	}
-	public Thread handleMetadata(ObservableMap<String,Object> metadata) {
+	public Thread handleMetadata(ObservableMap<String,Object> metadata, Path p) {
 		Thread t = new Thread(() -> {
 			String artist = (String) metadata.get("artist");
 			String title  = (String) metadata.get("title");
 			int year   	  = (int) metadata.get("year"); 
 			String album  = (String) metadata.get("album");
 			Song song 	  = new Song(artist, title, album, year);
+			song.setPath(p);
 			Main.songs.add(song);
 			this.songTableView.setItems(Main.songs);
-			System.out.println("Artist: " + song.getArtist());
-			System.out.println("Title: " + song.getTitle());
-			System.out.println("Album: " + song.getAlbum());
-			System.out.println("Year: " + song.getYear());
+//			System.out.println("Artist: " + song.getArtist());
+//			System.out.println("Title: " + song.getTitle());
+//			System.out.println("Album: " + song.getAlbum());
+//			System.out.println("Year: " + song.getYear());
 		});
 		return t;
 	}
 	
 	@FXML
 	public void saveMetadata(ActionEvent event) {
-		System.out.println("apply button clicked");
-		System.out.println(this.editingSong.toString());
-		String artist = this.editingSong.get(0);
-		String title  = this.editingSong.get(1);
-		String album  = this.editingSong.get(2);
-		int year	  = (Integer.valueOf(this.editingSong.get(3)));
-		System.out.println("New Artist Value: " + artist);
-		Song s = new Song(artist, title, album, year);
-		String filename = "song.mp3";
+		String artist = this.dataList.getItems().get(0);
+		String title  = this.dataList.getItems().get(1);
+		String album  = this.dataList.getItems().get(2);
+		int year	  = (Integer.valueOf(this.dataList.getItems().get(3)));
+		Song newSong = new Song(artist, title, album, year);
+		String filename = this.editingSong.getPath().toString();
+		newSong.setPath(this.editingSong.getPath());
+		
 		try {
-			metaEdit.editFile(filename, s);
-			Main.songs.add(s);
+			metaEdit.editFile(filename, newSong); // saves to disk
+			// loop through to find song whose filename matches the filename
+			int i = 0;
+			for(Song s: Main.songs) {
+				if(s.getPath().equals(newSong.getPath())) {
+					break;
+				}
+				i++;
+			}
+			Main.songs.set(i, newSong);
+			this.songTableView.setItems(Main.songs);
+
+			
 		} catch (ID3Exception e) {
 			System.out.println("ID3Exception when saving metadata");
 			e.printStackTrace();

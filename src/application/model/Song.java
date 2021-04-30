@@ -1,5 +1,7 @@
 package application.model;
 
+import java.nio.file.Path;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,6 +14,7 @@ public final class Song extends SimpleObjectProperty<String>{
 	private StringProperty title;
 	private StringProperty album;
 	private SimpleIntegerProperty year;
+	private Path path;
 
 	//constructor for the song class
 	public Song(String artist, String title, String album, int year) {
@@ -79,6 +82,20 @@ public final class Song extends SimpleObjectProperty<String>{
 
 	public void setTitle(String title) {
 		getTitleProperty().set(title);
+	}
+	
+	public void setPath(Path p) {
+		this.path = p;
+	}
+	
+	public Path getPath() {
+		return this.path;
+	}
+	
+	public String toString() {
+		
+		return "Artist: " + this.getArtist() + ", Title: " + this.getTitle() + ", Album: " + this.getAlbum() + ", Year: " + this.getYear();
+		
 	}
 
 }
