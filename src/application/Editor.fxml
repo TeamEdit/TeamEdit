@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -58,7 +59,26 @@
                            <children>
                               <HBox prefHeight="199.0" prefWidth="295.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label prefHeight="21.0" prefWidth="57.0" text="Data" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="57.0" text="Artist">
+                                             <padding>
+                                                <Insets bottom="7.0" />
+                                             </padding></Label>
+                                          <Label layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="57.0" text="Title">
+                                             <padding>
+                                                <Insets bottom="7.0" />
+                                             </padding></Label>
+                                          <Label layoutX="10.0" layoutY="31.0" prefHeight="21.0" prefWidth="57.0" text="Album">
+                                             <padding>
+                                                <Insets bottom="7.0" />
+                                             </padding></Label>
+                                          <Label layoutX="10.0" layoutY="52.0" prefHeight="21.0" prefWidth="57.0" text="Year">
+                                             <padding>
+                                                <Insets bottom="7.0" />
+                                             </padding></Label>
+                                       </children>
+                                    </VBox>
                                     <ListView fx:id="dataList" editable="true" prefHeight="239.0" prefWidth="435.0" />
                                     <ScrollBar orientation="VERTICAL" prefHeight="100.0" prefWidth="20.0" />
                                  </children>
