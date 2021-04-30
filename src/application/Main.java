@@ -17,7 +17,7 @@ import application.model.Song;
 public class Main extends Application {
 	public static FS filesystem;
 	public static ObservableList<Song> songs = FXCollections.observableArrayList();
-
+	public static Song activeSong;
 	public static int mode;
 	@Override
 	public void start(Stage primaryStage) {

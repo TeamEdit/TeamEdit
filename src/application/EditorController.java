@@ -2,6 +2,8 @@ package application;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import org.blinkenlights.jid3.ID3Exception;
+
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
@@ -10,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -24,11 +27,16 @@ import application.model.*;
 
 public class EditorController {
 
+	
+	
 	@FXML 
 	public TableView<Song> songTableView;
 
 	@FXML ListView dataList;
 
+	@FXML 
+	public Button applyButton;
+	
 	@FXML
 	private MenuItem importSong;
 
@@ -134,6 +142,20 @@ public class EditorController {
 			System.out.println("Year: " + song.getYear());
 		});
 		return t;
+	}
+	
+	@FXML
+	public void saveMetadata(ActionEvent event) {
+		System.out.println("apply button clicked");
+		Song s = new Song("Kero Kero Bonito", "Waiting", "Bonito Generation", 2020);
+		String filename = "song.mp3";
+		try {
+			metaEdit.editFile(filename, s);
+			Main.songs.add(s);
+		} catch (ID3Exception e) {
+			System.out.println("ID3Exception when saving metadata");
+			e.printStackTrace();
+		}
 	}
 }
 
