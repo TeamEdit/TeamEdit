@@ -28,7 +28,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="215.0">
                <children>
-                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.475177304964539" orientation="VERTICAL" prefHeight="566.0" prefWidth="496.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
@@ -38,16 +38,15 @@
                                     <ImageView fitHeight="211.0" fitWidth="227.0" pickOnBounds="true" preserveRatio="true" />
                                     <ToolBar prefHeight="40.0" prefWidth="494.0">
                                       <items>
-                                        <Button fx:id="playBut" onAction="#playSong" mnemonicParsing="false" text="Play" />
-                                          <Button fx:id="stopBut" onAction="#stopSong" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="Stop" />
-                                          <Slider fx:id="timeSlide" />
+                                        <Button fx:id="playBut" mnemonicParsing="false" onAction="#playSong" text="Play" />
+                                          <Button fx:id="stopBut" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#stopSong" text="Stop" />
                                       </items>
                                     </ToolBar>
                                  </children>
                               </VBox>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="494.0">
                            <children>
                               <HBox prefHeight="199.0" prefWidth="295.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -84,6 +83,5 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <TextArea prefHeight="21.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

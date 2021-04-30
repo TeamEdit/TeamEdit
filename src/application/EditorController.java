@@ -49,6 +49,7 @@ public class EditorController {
 	private MenuBar theMenu;
 
 	private Song editingSong;
+	private Path path2;
 	private Media media;
 	private MediaPlayer player;
 
@@ -117,10 +118,10 @@ public class EditorController {
 						this.dataList.setItems(this.editingSongData);
 						this.dataList.setEditable(true);
 						this.dataList.setCellFactory(TextFieldListCell.forListView());
-					}/*else if (e.getClickCount() == 1 && e.isPrimaryButtonDown() ){
-						media = m;
+						path2 = this.editingSong.getPath();
+						media = new Media(path2.toUri().toString());
 						player = new MediaPlayer(media);
-					}*/
+					}
 				});
 			}
 		}
