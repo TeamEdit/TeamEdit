@@ -5,7 +5,7 @@ Timothy Lesgaux, Benny Pimentel, Harrison Hammonds
 Audio Meta Edit gives the user a GUI to alter the Artist, Title, Album, and Year ID3 metadata of audio files.
 
 ---Setup---
-In addition to the JRE 1.8 and JavaFX libraries, Audio Meta Edit requires the JID3 library which is located here: https://blinkenlights.org/jid3/. Add this library by right clicking the project in Eclipse, selecting Properties > Java Build Path > Add External JARs and navigating to the location of "\jid3_0.46\dist\JID3.jar".
+In addition to the JRE 1.8 and JavaFX libraries, Audio Meta Edit requires the JID3 library which is located here: https://blinkenlights.org/jid3/. Add this library by right clicking the project in Eclipse, selecting Properties > Java Build Path > Add External JARs and navigating to the location of "JID3.jar".
 
 ---File Manager---
 User can navigate by selecting directories in the list or typing a file path in the top text field and pressing "Go".
